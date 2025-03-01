@@ -10,28 +10,26 @@ struct PlayerData {
 }
 dispatch maputil:player_data[%unknown] to any
 
+dispatch maputil:player_data[maputil] to struct UtilPlayerData {
+  uuid?: #[uuid] int[] @ 4
+}
+
 dispatch :storage[maputil:_] to CommandStorage<InternalStorage>
 struct InternalStorage {
-  [#[dispatcher_key="maputil:_storage"] string]: maputil:_storage[[%key]]
+  macro?: struct MacroParam {
+    id?: int @ 1..
+  },
+  player_data?: struct PlayerDatabase {
+    [#[integer(min=1)] string]: PlayerData
+  },
+  marker_data?: :entity[marker][data]
 }
-dispatch maputil:_storage[%unknown] to any
-
-dispatch maputil:_storage[macro] to struct MacroParam {
-  id?: int @ 1..
-}
-dispatch maputil:_storage[player_data] to struct PlayerDatabase {
-  [#[integer(min=1)] string]: PlayerData
-}
-dispatch maputil:_storage[marker_data] to :entity[marker][data]
 
 
 dispatch mcdoc:custom_data[maputil] to struct ItemData {
-  [#[dispatcher_key="maputil:_item_data"] string]: maputil:_item_data[[%key]]
-}
-dispatch maputil:_item_data[%unknown] to any
-
-dispatch maputil:_item_data[translated] to struct {
-  "_"?: int
+  translated?: struct {
+    "_"?: int
+  }
 }
 
 
