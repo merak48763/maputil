@@ -3,7 +3,6 @@ type CommandStorage<T> = struct {
 }
 
 dispatch :storage[maputil:aec] to CommandStorage<:entity[area_effect_cloud]>
-dispatch :storage[maputil:marker] to CommandStorage<:entity[marker]>
 
 dispatch :storage[maputil:player_data] to CommandStorage<PlayerData>
 struct PlayerData {
@@ -23,16 +22,28 @@ dispatch maputil:_storage[macro] to struct MacroParam {
 dispatch maputil:_storage[player_data] to struct PlayerDatabase {
   [#[integer(min=1)] string]: PlayerData
 }
+dispatch maputil:_storage[marker_data] to :entity[marker][data]
 
 
 dispatch mcdoc:custom_data[maputil] to struct ItemData {
-  [#[dispatcher_key="maputil:item_data"] string]: maputil:_item_data[[%key]]
+  [#[dispatcher_key="maputil:_item_data"] string]: maputil:_item_data[[%key]]
 }
 dispatch maputil:_item_data[%unknown] to any
 
-dispatch maputil:_item_data[translated] to struct {}
+dispatch maputil:_item_data[translated] to struct {
+  "_"?: int
+}
 
 
+dispatch mcdoc:marker_data[interaction] to struct InteractionReactions {
+  left_click?: ClickReactions,
+  right_click?: ClickReactions,
+  mutual_exclusive?: boolean
+}
+struct ClickReactions {
+  this?: CallbackFunction,
+  player?: CallbackFunction
+}
 struct CallbackFunction {
   function: #[id(registry="function", tags="allowed")] string
 }
