@@ -1,0 +1,3 @@
+schedule function maputil:_/scheduled_1s 1s replace
+
+execute as @e[type=text_display, tag=maputil.translated] run function maputil:_/text_display/refresh_this
