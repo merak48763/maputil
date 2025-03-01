@@ -1,0 +1,6 @@
+type CommandStorage<T> = struct {
+  root: T
+}
+
+dispatch :storage[maputil:aec] to CommandStorage<:entity[area_effect_cloud]>
+dispatch :storage[maputil:marker] to CommandStorage<:entity[marker]>
