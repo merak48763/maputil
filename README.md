@@ -60,6 +60,11 @@ Minecraft version: The upcoming game drop (supposed to be 1.21.5)
 - Context: Entity
 - Passes if the entity has vehicle.
 
+### `maputil:is_killer_bunny`
+
+- Context: Entity
+- Passes if the entity is killer bunny
+
 ## Function Macro
 
 ### `maputil:callback_macro`
