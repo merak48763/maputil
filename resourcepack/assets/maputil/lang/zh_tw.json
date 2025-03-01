@@ -1,0 +1,4 @@
+{
+  "maputil.function.error": "[maputil] 錯誤：%s",
+  "maputil.function.error.not_as_player": "函數 %s 需要在玩家實體上執行"
+}
