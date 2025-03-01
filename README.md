@@ -31,17 +31,14 @@ Minecraft version: The upcoming game drop (supposed to be 1.21.5)
 #### `#maputil:beneficial`
 
 - All beneficial effects.
-- Aligned with the gamecode definition.
 
 #### `#maputil:neutral`
 
 - All neutral effects.
-- Aligned with the gamecode definition.
 
 #### `#maputil:harmful`
 
 - All harmful effects.
-- Aligned with the gamecode definition.
 
 #### `#maputil:instantaneous`
 
@@ -86,7 +83,7 @@ Triggers functions when an interaction is clicked.
 
 #### Data Structure
 
-Root: the `data` nbt of marker.
+Root: the `data` NBT of marker.
 
 - compound `interaction`
   - (optional) compound `left_click`: Defines reactions to left click.
@@ -99,7 +96,7 @@ Root: the `data` nbt of marker.
       - string `function`: The function to be run as & at the interaction.
     - (optional) compound `player`
       - string `function`: The function to be run as the player clicked the interaction, at the interaction.
-  - (optional) boolean `mutual_exclusive`: Whether the left click event should be ignored when the interaction is simultaneously left-clicked and right-clicked. Defaults to `false`.
+  - (optional) boolean `mutual_exclusive`: Whether the left click event should be ignored when the interaction is simultaneously left-clicked and right-clicked (probably by different players). Defaults to `false`.
 
 ### Example
 
@@ -244,7 +241,7 @@ Function with specific tags will be invoked by some events.
 
 ### `minecraft:seven`
 
-- The classic Mojangles font, regardless of Forced Unicode settings.
+- The classic Mojangles font, regardless of Force Unicode settings.
 
 ### `maputil:inv7`
 
@@ -271,3 +268,35 @@ Function with specific tags will be invoked by some events.
 - Example: The string `\ue102\uf001`
   - Width = -4 when Force Unicode is OFF (`\ue102`: -4, `\uf001`: 0)
   - Width = -2 when Force Unicode is ON (`\ue102`: -4, `\uf001`: 2)
+
+## Shaders
+
+The functions are in `maputil:util.glsl`.
+
+> [!Note]
+> Core shader functionality was significantly limited since 25w07a.  
+> Some uniforms (e.g. `ScreenSize`) may not be available everywhere.
+
+### `roughlyEqual`
+
+```glsl
+bool roughlyEqual(float a, float b)
+```
+
+- Returns `true` if the difference between the two inputs are less than 1e-4.
+
+### `isGui`
+
+```glsl
+bool isGui(mat4 ProjMat)
+```
+
+- Returns `true` if the element is a part of GUI.
+
+### `getGuiScale`
+
+```glsl
+int getGuiScale(mat4 ProjMat, vec2 ScreenSize)
+```
+
+- Returns the GUI scale value.
