@@ -5,46 +5,44 @@ Minecraft version: The upcoming game drop (supposed to be 1.21.5)
 
 # Datapack
 
-## Tags
+## Block Tags
 
-### Block Tags
-
-#### `#maputil:no_hitbox`
+### `#maputil:no_hitbox`
 
 - All blocks which don't block projectile motion.
 - Includes blocks which slows some entities down (e.g. cobweb).
 
-### Entity Tags
+## Entity Tags
 
-#### `#maputil:monster`
+### `#maputil:monster`
 
 - All monsters.
 - `rabbit` is not included, so killer bunny may require extra tests.
 
-#### `#maputil:non_living`
+### `#maputil:non_living`
 
 - Non living entities.
 - It's a bit different from the gamecode `LivingEntity` definition - `armor_stand` is included in this tag.
 
-### Mob Effect Tags
+## Mob Effect Tags
 
-#### `#maputil:beneficial`
+### `#maputil:beneficial`
 
 - All beneficial effects.
 
-#### `#maputil:neutral`
+### `#maputil:neutral`
 
 - All neutral effects.
 
-#### `#maputil:harmful`
+### `#maputil:harmful`
 
 - All harmful effects.
 
-#### `#maputil:instantaneous`
+### `#maputil:instantaneous`
 
 - All instantaneous effects.
 
-#### `#maputil:status`
+### `#maputil:status`
 
 - All non-instantaneous effects.
 
@@ -64,6 +62,16 @@ Minecraft version: The upcoming game drop (supposed to be 1.21.5)
 
 - Context: Entity
 - Passes if the entity is killer bunny
+
+## Item Modifiers
+
+### `maputil:add_one`
+
+- Item count +1.
+
+### `maputil:remove_one`
+
+- Item count -1.
 
 ## Function Macro
 
@@ -86,9 +94,9 @@ Triggers functions when an interaction is clicked.
 - The marker should have `maputil.interaction` tag.
 - The marker is automatically removed when the interaction disappears.
 
-#### Data Structure
+### Data Structure
 
-Root: the `data` NBT of marker.
+Root: `data` NBT of the data marker.
 
 - compound `interaction`
   - (optional) compound `left_click`: Defines reactions to left click.

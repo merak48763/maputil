@@ -7,6 +7,7 @@ execute on target run scoreboard players set #right_clicked maputil._ 1
 execute if score #left_clicked maputil._ matches 0 if score #right_clicked maputil._ matches 0 run return fail
 
 # Load data
+data modify storage maputil:_ root.marker_data set value {interaction: {}}
 execute on passengers if entity @s[type=marker, tag=maputil.interaction] run data modify storage maputil:_ root.marker_data set from entity @s data
 
 # Right click
