@@ -85,23 +85,16 @@ $function $(function)
 
 Triggers functions when an interaction is clicked.
 
-- The interaction should have `maputil.interaction` custom data.
+- The functions are recorded in custom data of the interaction.
+  - `maputil.on_interact`: Right click reaction
+  - `maputil.on_attack`: Left click reaction
 
 ### Data Structure
 
-Root: `data.maputil.interaction` NBT of the data marker.
-
-- (optional) compound `left_click`: Defines reactions to left click.
-  - (optional) compound `this`
-    - string `function`: The function to be run as & at the interaction.
-  - (optional) compound `player`
-    - string `function`: The function to be run as the player clicked the interaction, at the interaction.
-- (optional) compound `right_click`: Define reactions to right click.
-  - (optional) compound `this`
-    - string `function`: The function to be run as & at the interaction.
-  - (optional) compound `player`
-    - string `function`: The function to be run as the player clicked the interaction, at the interaction.
-- (optional) boolean `mutual_exclusive`: Whether the left click event should be ignored when the interaction is simultaneously left-clicked and right-clicked (probably by different players). Defaults to `false`.
+- (optional) compound `player`
+  - string `function`: The function to be run as the player clicked the interaction, at the interaction.
+- (optional) compound `this`
+  - string `function`: The function to be run as & at the interaction.
 
 ### Example
 
@@ -110,9 +103,9 @@ Root: `data.maputil.interaction` NBT of the data marker.
 ```mcfunction
 summon interaction ~ ~ ~ { \
   data: { \
-    maputil: {interaction: { \
-      right_click: {player: {function: "foo:bar"}} \
-    }} \
+    maputil: { \
+      on_interact: {player: {function: "foo:bar"}} \
+    } \
   } \
 }
 ```

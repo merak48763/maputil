@@ -1,9 +1,23 @@
 {
-  "condition": "entity_properties",
-  "entity": "this",
-  "predicate": {
-    "predicates": {
-      "custom_data": "{maputil: {interaction: {}}}"
+  "condition": "any_of",
+  "terms": [
+    {
+      "condition": "entity_properties",
+      "entity": "this",
+      "predicate": {
+        "predicates": {
+          "custom_data": "{maputil: {on_attack: {}}}"
+        }
+      }
+    },
+    {
+      "condition": "entity_properties",
+      "entity": "this",
+      "predicate": {
+        "predicates": {
+          "custom_data": "{maputil: {on_interact: {}}}"
+        }
+      }
     }
-  }
+  ]
 }

@@ -12,10 +12,5 @@ data modify storage maputil:_ root.custom_data set from entity @s data.maputil
 # Right click
 execute if score #right_clicked maputil._ matches 1 run function maputil:_/interaction/process_right_click
 
-# Mutual exclusive interaction
-execute if score #right_clicked maputil._ matches 1 \
-  if data storage maputil:_ root.custom_data.interaction{right_click: {}, mutual_exclusive: true} \
-  run return run data remove entity @s attack
-
 # Left click
 execute if score #left_clicked maputil._ matches 1 run function maputil:_/interaction/process_left_click

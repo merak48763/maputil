@@ -4,7 +4,10 @@
       "trigger": "player_hurt_entity",
       "conditions": {
         "entity": {
-          "type": "interaction"
+          "type": "interaction",
+          "predicates": {
+            "custom_data": "{maputil: {on_attack: {}}}"
+          }
         }
       }
     },
@@ -12,7 +15,10 @@
       "trigger": "player_interacted_with_entity",
       "conditions": {
         "entity": {
-          "type": "interaction"
+          "type": "interaction",
+          "predicates": {
+            "custom_data": "{maputil: {on_interact: {}}}"
+          }
         }
       }
     },
