@@ -85,31 +85,23 @@ $function $(function)
 
 Triggers functions when an interaction is clicked.
 
-- The interaction should have `maputil.interaction` tag.
-- The interaction should have exactly one special marker passenger.
-  - Other unrelated marker passengers are allowed.
-
-### The Data Marker
-
-- The marker should have `maputil.interaction` tag.
-- The marker is automatically removed when the interaction disappears.
+- The interaction should have `maputil.interaction` custom data.
 
 ### Data Structure
 
-Root: `data` NBT of the data marker.
+Root: `data.maputil.interaction` NBT of the data marker.
 
-- compound `interaction`
-  - (optional) compound `left_click`: Defines reactions to left click.
-    - (optional) compound `this`
-      - string `function`: The function to be run as & at the interaction.
-    - (optional) compound `player`
-      - string `function`: The function to be run as the player clicked the interaction, at the interaction.
-  - (optional) compound `right_click`: Define reactions to right click.
-    - (optional) compound `this`
-      - string `function`: The function to be run as & at the interaction.
-    - (optional) compound `player`
-      - string `function`: The function to be run as the player clicked the interaction, at the interaction.
-  - (optional) boolean `mutual_exclusive`: Whether the left click event should be ignored when the interaction is simultaneously left-clicked and right-clicked (probably by different players). Defaults to `false`.
+- (optional) compound `left_click`: Defines reactions to left click.
+  - (optional) compound `this`
+    - string `function`: The function to be run as & at the interaction.
+  - (optional) compound `player`
+    - string `function`: The function to be run as the player clicked the interaction, at the interaction.
+- (optional) compound `right_click`: Define reactions to right click.
+  - (optional) compound `this`
+    - string `function`: The function to be run as & at the interaction.
+  - (optional) compound `player`
+    - string `function`: The function to be run as the player clicked the interaction, at the interaction.
+- (optional) boolean `mutual_exclusive`: Whether the left click event should be ignored when the interaction is simultaneously left-clicked and right-clicked (probably by different players). Defaults to `false`.
 
 ### Example
 
@@ -117,23 +109,12 @@ Root: `data` NBT of the data marker.
 
 ```mcfunction
 summon interaction ~ ~ ~ { \
-  Tags: ["maputil.interaction"], \
-  Passengers: [{ \
-    Tags: ["maputil.interaction"], \
-    data: { \
-      interaction: { \
-        right_click: {player: {function: "foo:bar"}} \
-      } \
-    } \
-  }] \
+  data: { \
+    maputil: {interaction: { \
+      right_click: {player: {function: "foo:bar"}} \
+    }} \
+  } \
 }
-```
-
-#### Removing Interaction
-
-```mcfunction
-kill @n[type=interaction, tag=maputil.interaction]
-# No need to worry about the data marker
 ```
 
 ## Text Refresh System
@@ -143,24 +124,26 @@ Texts are refreshed once per second.
 
 ### Text Display
 
-- The text display should have `maputil.translated` tag.
+- The text display should have `maputil.translated` custom data.
+  - Data value: Empty object `{}`.
 
-### Example
+#### Example
 
 ```mcfunction
 summon text_display ~ ~ ~ { \
-  Tags: ["maputil.translated"], \
   alignment: "center", \
-  text: {translate: "block.minecraft.stone"} \
+  text: {translate: "block.minecraft.stone"}, \
+  data: { \
+    maputil: {translated: {}} \
+  } \
 }
 ```
 
 ### Sign
 
-- Summon a marker at the location of the sign.
-- The marker should have `maputil.translated` tag.
-- The sign should have custom data component:
-  - compound `components.minecraft:custom_data.maputil.translated`: Empty object `{}`.
+- Summon a marker with `maputil.translated` tag at the location of the sign.
+- The sign should have `maputil.translated` custom data.
+  - Data value: Empty object `{}`.
 - The marker is automatically removed when the sign disappears.
 
 #### Example

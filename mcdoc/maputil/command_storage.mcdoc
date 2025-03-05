@@ -1,0 +1,28 @@
+use super::custom_data::CustomData
+
+type CommandStorage<T> = struct {
+  root: T
+}
+
+dispatch :storage[maputil:_] to CommandStorage<InternalStorage>
+struct InternalStorage {
+  macro?: struct MacroParam {
+    id?: int @ 1..
+  },
+  player_data?: struct PlayerDatabase {
+    [#[integer(min=1)] string]: PlayerData
+  },
+  custom_data?: CustomData
+}
+
+dispatch :storage[maputil:aec] to CommandStorage<:entity[area_effect_cloud]>
+
+dispatch :storage[maputil:player_data] to CommandStorage<PlayerData>
+struct PlayerData {
+  [#[dispatcher_key="maputil:player_data"] string]: maputil:player_data[[%key]]
+}
+dispatch maputil:player_data[%unknown] to any
+
+dispatch maputil:player_data[maputil] to struct UtilPlayerData {
+  uuid?: #[uuid] int[] @ 4
+}

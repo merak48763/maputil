@@ -1,0 +1,28 @@
+dispatch mcdoc:custom_data[maputil] to struct CustomData {
+  /// Applies on: Sign / Text display
+  /// Exists if the text is translated and therefore needs be refreshed periodically
+  translated?: struct {
+    /// Internally used value
+    "_"?: int
+  },
+  /// Applies on: Interaction
+  /// The interaction will execute specified function on clicked
+  interaction?: InteractionReactions
+}
+
+struct InteractionReactions {
+  /// Reaction to left click
+  left_click?: ClickReactions,
+  /// Reaction to right click
+  right_click?: ClickReactions,
+  /// Whether left click should be ignored when right click reaction is triggered in the same tick
+  /// Defaults to `false`
+  mutual_exclusive?: boolean
+}
+struct ClickReactions {
+  this?: CallbackFunction,
+  player?: CallbackFunction
+}
+struct CallbackFunction {
+  function: #[id(registry="function", tags="allowed")] string
+}
