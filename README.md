@@ -3,6 +3,12 @@
 Utility datapack & resourcepack providing utilities for mapmaking.  
 Minecraft version: The upcoming game drop (supposed to be 1.21.5)
 
+# Mcdoc
+
+Mcdoc is a feature of VSCode [Spyglass extension](https://github.com/SpyglassMC/Spyglass).  
+If you're using the extension, you can copy `mcdoc/` folder to the root of your workspace.  
+It provides syntax highlighting and autocompletion of custom data provided by this pack.
+
 # Datapack
 
 ## Block Tags
@@ -169,10 +175,10 @@ function maputil:load_player_data
 data modify storage maputil:player_data root.foo set value "bar"
 ```
 
-### Mcdoc
+### Mcdoc Support
 
 > [!Note]
-> Mcdoc is a feature of VSCode [Spyglass extension](https://github.com/SpyglassMC/Spyglass).
+> [Here](https://spyglassmc.com/user/mcdoc/) is mcdoc syntax documentation.
 
 The dispatcher of player data storage is `maputil:player_data`.
 
