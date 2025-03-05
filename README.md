@@ -131,7 +131,6 @@ Texts are refreshed once per second.
 
 ```mcfunction
 summon text_display ~ ~ ~ { \
-  alignment: "center", \
   text: {translate: "block.minecraft.stone"}, \
   data: { \
     maputil: {translated: {}} \
