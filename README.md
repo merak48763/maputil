@@ -241,7 +241,7 @@ Function with specific tags will be invoked by some events.
 
 - The classic Mojangles font, regardless of Force Unicode settings.
 
-### `maputil:inv7`
+### `maputil:neg/seven`
 
 - Inverts width of digits (and `-` and `.`) of `minecraft:seven`.
 - It's planned to invert all non-unifont characters in `minecraft:seven`. (Not implemented)
@@ -270,10 +270,6 @@ Function with specific tags will be invoked by some events.
 ## Shaders
 
 The functions are in `maputil:util.glsl`.
-
-> [!Note]
-> Core shader functionality was significantly limited since 25w07a.  
-> Some uniforms (e.g. `ScreenSize`) may not be available everywhere.
 
 ### `roughlyEqual`
 
