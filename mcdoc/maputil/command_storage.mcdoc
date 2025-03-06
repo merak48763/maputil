@@ -1,4 +1,6 @@
 use super::custom_data::CustomData
+use super::custom_data::CallbackFunction
+use ::java::server::util::effect::MobEffectInstance
 
 type CommandStorage<T> = struct {
   root: T
@@ -7,7 +9,8 @@ type CommandStorage<T> = struct {
 dispatch :storage[maputil:_] to CommandStorage<InternalStorage>
 struct InternalStorage {
   macro?: struct MacroParam {
-    id?: int @ 1..
+    id?: int @ 1..,
+    function?: CallbackFunction
   },
   player_data?: struct PlayerDatabase {
     [#[integer(min=1)] string]: PlayerData
@@ -15,7 +18,9 @@ struct InternalStorage {
   custom_data?: CustomData
 }
 
-dispatch :storage[maputil:aec] to CommandStorage<:entity[area_effect_cloud]>
+dispatch :storage[maputil:aec] to struct {
+  custom_effects?: [MobEffectInstance]
+}
 
 dispatch :storage[maputil:player_data] to CommandStorage<PlayerData>
 struct PlayerData {

@@ -97,10 +97,8 @@ Triggers functions when an interaction is clicked.
 
 ### Data Structure
 
-- (optional) compound `player`
-  - string `function`: The function to be run as the player clicked the interaction, at the interaction.
-- (optional) compound `this`
-  - string `function`: The function to be run as & at the interaction.
+- (optional) string `as_player`: The function to be run as the player clicked the interaction, at the interaction.
+- (optional) string `as_this`: The function to be run as & at the interaction.
 
 ### Example
 
@@ -108,7 +106,7 @@ Triggers functions when an interaction is clicked.
 summon interaction ~ ~ ~ { \
   data: { \
     maputil: { \
-      on_interact: {player: {function: "foo:bar"}} \
+      on_interact: {as_player: "foo:bar"} \
     } \
   } \
 }
@@ -215,14 +213,15 @@ Function with specific tags will be invoked by some events.
 ### `#maputil:entity_event/on_aec_spawned`
 
 - Runs when an area effect cloud appears.
-- As & at the AEC.
-- The data of the AEC is copied to `root` of data storage `maputil:aec`.
+- As & at the new AEC.
+- The `potion_contents.custom_effects` of the AEC is copied to `custom_effects` of data storage `maputil:aec`.
 - It's recommended to identify AECs in this function tag to avoid redundant entity NBT checks.
+  - Checking data storage is way faster than checking entity NBT.
   - You can give AECs tags in this function tag.
-  - Do NOT kill AECs in this function tag.
 
 > [!Tip]
 > Currently, AEC spawned by lingering potion inherits `custom_data` component.  
+> Also, vanilla potion effects can be tested with `potion_contents` component predicate.  
 > Only creeper explosion detection still requires custom effect NBT test.
 
 # Resourcepack

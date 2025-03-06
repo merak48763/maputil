@@ -9,6 +9,7 @@ execute store result storage maputil:_ root.macro.id int 1 run scoreboard player
 execute if score #cache_data maputil._id matches 1.. run function maputil:_/player/save_data_macro with storage maputil:_ root.macro
 
 # Load data
+data modify storage maputil:player_data root set value {}
 execute store result storage maputil:_ root.macro.id int 1 run scoreboard players get @s maputil._id
 function maputil:_/player/load_data_macro with storage maputil:_ root.macro
 

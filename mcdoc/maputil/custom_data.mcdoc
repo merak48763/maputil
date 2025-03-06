@@ -16,12 +16,9 @@ dispatch mcdoc:custom_data[maputil] to struct CustomData {
 struct InteractionReaction {
   /// The callback to run as player, at the interaction
   /// Runs before `this` callback
-  player?: CallbackFunction,
+  as_player?: CallbackFunction,
   /// The callback to run as & at the interaction
   /// Runs after `player` callback
-  this?: CallbackFunction
+  as_this?: CallbackFunction
 }
-struct CallbackFunction {
-  /// Function or function tag to be invoked
-  function: #[id(registry="function", tags="allowed")] string
-}
+type CallbackFunction = #[id(registry="function", tags="allowed")] string
