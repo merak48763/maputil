@@ -104,8 +104,6 @@ Triggers functions when an interaction is clicked.
 
 ### Example
 
-#### Creating Interaction
-
 ```mcfunction
 summon interaction ~ ~ ~ { \
   data: { \
@@ -123,17 +121,14 @@ Texts are refreshed once per second.
 
 ### Text Display
 
-- The text display should have `maputil.translated` custom data.
-  - Data value: Empty object `{}`.
+- The text display should have `maputil.translated` tag.
 
 #### Example
 
 ```mcfunction
 summon text_display ~ ~ ~ { \
   text: {translate: "block.minecraft.stone"}, \
-  data: { \
-    maputil: {translated: {}} \
-  } \
+  Tags: ["maputil.translated"], \
 }
 ```
 
