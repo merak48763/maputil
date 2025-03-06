@@ -226,6 +226,10 @@ Function with specific tags will be invoked by some events.
   - You can give AECs tags in this function tag.
   - Do NOT kill AECs in this function tag.
 
+> [!Tip]
+> Currently, AEC spawned by lingering potion inherits `custom_data` component.  
+> Only creeper explosion detection still requires custom effect NBT test.
+
 # Resourcepack
 
 > [!Note]
