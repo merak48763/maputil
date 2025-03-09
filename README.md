@@ -13,10 +13,9 @@ It provides syntax highlighting and autocompletion of custom data provided by th
 
 ## Block Tags
 
-### `#maputil:no_hitbox`
-
-- All blocks which don't block projectile motion.
-- Includes blocks which slows some entities down (e.g. cobweb).
+- `#maputil:no_hitbox`
+  - All blocks which don't block projectile motion.
+  - Includes blocks which slows some entities down (e.g. cobweb).
 
 ## Entity Tags
 
