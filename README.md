@@ -20,64 +20,44 @@ It provides syntax highlighting and autocompletion of custom data provided by th
 
 ## Entity Tags
 
-### `#maputil:monster`
-
-- All monsters.
-- `rabbit` is not included, so killer bunny may require extra tests.
-
-### `#maputil:non_living`
-
-- Non living entities.
-- It's a bit different from the gamecode `LivingEntity` definition - `armor_stand` is included in this tag.
+- `#maputil:monster`
+  - All monsters.
+  - `rabbit` is not included, so killer bunny may require extra tests.
+- `#maputil:non_living`
+  - Non living entities.
+  - It's a bit different from the gamecode `LivingEntity` definition - `armor_stand` is included in this tag.
 
 ## Mob Effect Tags
 
-### `#maputil:beneficial`
-
-- All beneficial effects.
-
-### `#maputil:neutral`
-
-- All neutral effects.
-
-### `#maputil:harmful`
-
-- All harmful effects.
-
-### `#maputil:instantaneous`
-
-- All instantaneous effects.
-
-### `#maputil:status`
-
-- All non-instantaneous effects.
+- `#maputil:beneficial`
+  - All beneficial effects.
+- `#maputil:neutral`
+  - All neutral effects.
+- `#maputil:harmful`
+  - All harmful effects.
+- `#maputil:instantaneous`
+  - All instantaneous effects.
+- `#maputil:status`
+  - All non-instantaneous effects.
 
 ## Predicates
 
-### `maputil:has_passenger`
-
-- Context: Entity
-- Passes if the entity has passenger.
-
-### `maputil:has_vehicle`
-
-- Context: Entity
-- Passes if the entity has vehicle.
-
-### `maputil:is_killer_bunny`
-
-- Context: Entity
-- Passes if the entity is killer bunny
+- `maputil:has_passenger`
+  - Context: Entity
+  - Passes if the entity has passenger.
+- `maputil:has_vehicle`
+  - Context: Entity
+  - Passes if the entity has vehicle.
+- `maputil:is_killer_bunny`
+  - Context: Entity
+  - Passes if the entity is killer bunny
 
 ## Item Modifiers
 
-### `maputil:add_one`
-
-- Item count +1.
-
-### `maputil:remove_one`
-
-- Item count -1.
+- `maputil:grow`
+  - Item count +1.
+- `maputil:shrink`
+  - Item count -1.
 
 ## Function Macro
 
