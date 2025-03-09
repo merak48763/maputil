@@ -235,17 +235,29 @@ Function with specific tags will be invoked by some events.
 
 - The classic Mojangles font, regardless of Force Unicode settings.
 
-### `maputil:neg/seven`
+### `maputil:neg/*`
 
-- Inverts width of digits (and `-` and `.`) of `minecraft:seven`.
-- It's planned to invert all non-unifont characters in `minecraft:seven`. (Not implemented)
+- Negative width version of fonts.
+- Including:
+  - `neg/default`
+  - `neg/seven`
+  - `neg/uniform`
+  - `neg/alt`
+  - `neg/illageralt`
+
+### `maputil:half_neg/*`
+
+- Half negative width version of fonts.
+- Including:
+  - `half_neg/default`
+  - `half_neg/seven`
+  - `half_neg/uniform`
+  - `half_neg/alt`
+  - `half_neg/illageralt`
 
 ### `maputil:space`
 
-- Inverts width of digits (and `-` and `.`) of `minecraft:default`.
-- Provides some fixed width spaces.
-
-#### Fixed Width Spaces
+Provides fixed width spaces.
 
 - `\u**0N` (`N` = 0 ~ b): Controls integer width
   - Width = `2^N`

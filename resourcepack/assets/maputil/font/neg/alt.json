@@ -6,11 +6,7 @@
     },
     {
       "type": "reference",
-      "id": "maputil:include/default_neg"
-    },
-    {
-      "type": "reference",
-      "id": "maputil:include/uniform_neg"
+      "id": "maputil:include/alt_neg"
     }
   ]
 }

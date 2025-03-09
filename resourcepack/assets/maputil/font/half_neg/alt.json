@@ -1,0 +1,12 @@
+{
+  "providers": [
+    {
+      "type": "reference",
+      "id": "maputil:include/space_half_neg"
+    },
+    {
+      "type": "reference",
+      "id": "maputil:include/alt_half_neg"
+    }
+  ]
+}
