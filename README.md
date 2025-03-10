@@ -234,6 +234,19 @@ Function with specific tags will be invoked by some events.
   - `half_neg/alt`
   - `half_neg/illageralt`
 
+> [!Note]
+> Because the full negative uniform font takes *long* time to load, by default it's configured to include only ASCII characters.  
+> This behavior is configurable in `generate_fonts.py`.  
+> To change this, you can:
+>
+> 1. modify the `UNIFONT_CHARSET` to include other characters, or
+> 1. modify the `should_unifont_include` to return `True` (not recommended).
+>
+> Example:
+> ```python
+> UNIFONT_CHARSET = set(range(256)) | set(ord(c) for c in "なんだそりゃ")
+> ```
+
 ### `maputil:space`
 
 Provides fixed width spaces.

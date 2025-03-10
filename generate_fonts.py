@@ -7,8 +7,14 @@ from zipfile import ZipFile
 from PIL import Image
 
 VERSION_NAME = "25w10a"
+UNIFONT_CHARSET = set(range(256)) | set(ord(c) for c in "")
+
 ROOT_FOLDER = Path("./font_generator_data")
 ASSETS_FILENAME = f"cache-{VERSION_NAME}-assets.zip"
+
+def should_unifont_include(codepoint: int):
+  #return True
+  return codepoint in UNIFONT_CHARSET
 
 def download_github():
   with requests.get(f"https://github.com/misode/mcmeta/archive/refs/tags/{VERSION_NAME}-assets.zip", stream=True) as res:
@@ -39,7 +45,7 @@ def read_unihex_archive(repo_archive: ZipFile, unihex_zip_path: str, *, width_ov
             continue
           codepoint, glyph = unihex_entry.split(":")
           codepoint = int(codepoint, 16)
-          if codepoint not in result and codepoint not in [0, ord(" ")]:
+          if should_unifont_include(codepoint) and codepoint not in result and codepoint not in [0, ord(" ")]:
             result[codepoint] = pixel_width(glyph)
   return result
 
@@ -98,7 +104,7 @@ space_widths = {}
 with ZipFile((ROOT_FOLDER / ASSETS_FILENAME).as_posix()) as asset_archive:
   # Unihex width overrides
   with asset_archive.open(f"mcmeta-{VERSION_NAME}-assets/assets/minecraft/font/include/unifont.json") as width_override_file:
-    # Workaround for the trailing comma in "Hangul Syllables" range comment field
+    # Workaround for MC-278459 (the trailing comma in "Hangul Syllables" range comment field)
     # Why, Mojang? Why?
     fixed_file_content = re.sub(r",\s*]", "]", width_override_file.read().decode("utf-8"))
     for provider in json.loads(fixed_file_content)["providers"]:
@@ -107,6 +113,8 @@ with ZipFile((ROOT_FOLDER / ASSETS_FILENAME).as_posix()) as asset_archive:
       is_jp_variant = provider.get("filter", {}).get("jp", False)
       for override in provider["size_overrides"]:
         for codepoint in range(ord(override["from"]), ord(override["to"]) + 1):
+          if not should_unifont_include(codepoint):
+            continue
           if is_jp_variant:
             unifont_jp_widths[codepoint] = override["right"] - override["left"] + 1
           else:
@@ -138,6 +146,8 @@ uniform_negative = {
     }
   ]
 }
+if len(unifont_jp_widths) == 0:
+  del uniform_negative["providers"][0]
 with open((ROOT_FOLDER / "output/uniform_neg.json").as_posix(), "w") as file:
   json.dump(uniform_negative, file, indent=2)
 with open("resourcepack/assets/maputil/font/include/uniform_neg.json", "w") as file:
@@ -158,6 +168,8 @@ uniform_half_negative = {
     }
   ]
 }
+if len(unifont_jp_widths) == 0:
+  del uniform_half_negative["providers"][0]
 with open((ROOT_FOLDER / "output/uniform_half_neg.json").as_posix(), "w") as file:
   json.dump(uniform_half_negative, file, indent=2)
 with open("resourcepack/assets/maputil/font/include/uniform_half_neg.json", "w") as file:
