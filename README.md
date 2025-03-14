@@ -1,7 +1,7 @@
 # MapUtil
 
 Utility datapack & resourcepack providing utilities for mapmaking.  
-Minecraft version: The upcoming game drop (supposed to be 1.21.5)
+Minecraft version: 1.21.5
 
 # Mcdoc
 
