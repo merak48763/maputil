@@ -235,16 +235,29 @@ Function with specific tags will be invoked by some events.
   - `half_neg/illageralt`
 
 > [!Note]
-> Because the full negative uniform font takes *long* time to load, by default it's configured to include only ASCII characters.  
+> Because the full negative uniform font takes *long* time to load, by default it's configured to only include some characters:
+>
+> - Characters with Mojangles counterpart
+> - Keyboard key names (e.g. "Left Shift") in all languages
+>
 > This behavior is configurable in `generate_fonts.py`.  
 > To change this, you can:
 >
-> 1. modify the `UNIFONT_CHARSET` to include other characters, or
-> 1. modify the `should_unifont_include` to return `True` (not recommended).
+> 1. modify `unifont_charset` to include other characters, or
+> 1. modify the behavior of function `build_charset()`, which has access to vanilla translations, or
+> 1. set `INCLUDE_ALL_CODEPOINTS` to `True` (not recommended).
 >
 > Example:
 > ```python
-> UNIFONT_CHARSET = set(range(256)) | set(ord(c) for c in "なんだそりゃ")
+> unifont_charset = set(range(256)) | set(ord(c) for s in ["なんだそりゃ", "＞＜"] for c in s)
+> ```
+>
+> Example:
+> ```python
+> def build_charset(repo_archive: ZipFile, /):
+>   # ...
+>   key_patterns = [re.compile(r"key\.keyboard\..+"), re.compile(r"enchantment\.level\.\d+")]
+>   # ...
 > ```
 
 ### `maputil:space`

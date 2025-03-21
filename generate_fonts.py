@@ -6,15 +6,27 @@ from tqdm import tqdm
 from zipfile import ZipFile
 from PIL import Image
 
-VERSION_NAME = "25w10a"
-UNIFONT_CHARSET = set(range(256)) | set(ord(c) for c in "")
+VERSION_NAME = "1.21.5-pre2"
 
 ROOT_FOLDER = Path("./font_generator_data")
 ASSETS_FILENAME = f"cache-{VERSION_NAME}-assets.zip"
 
-def should_unifont_include(codepoint: int):
-  #return True
-  return codepoint in UNIFONT_CHARSET
+unifont_charset = set(range(256))
+INCLUDE_ALL_CODEPOINTS = False
+
+def build_charset(repo_archive: ZipFile, /):
+  filename_pattern = re.compile(r".*/assets/minecraft/lang/[a-z]+_[a-z]+\.json")
+  key_patterns = [re.compile(r"key\.keyboard\..+")]
+  for lang_filename in repo_archive.namelist():
+    if not filename_pattern.match(lang_filename):
+      continue
+    with repo_archive.open(lang_filename) as lang_file:
+      translation = json.loads(lang_file.read())
+      unifont_charset.update(ord(c) for k, v in translation.items() if any(p.match(k) for p in key_patterns) for c in v)
+  default_font = json.loads(repo_archive.open(f"mcmeta-{VERSION_NAME}-assets/assets/minecraft/font/include/default.json").read())["providers"]
+  for provider in default_font:
+    if provider["type"] == "bitmap":
+      unifont_charset.update(ord(c) for row in provider["chars"] for c in row)
 
 def download_github():
   with requests.get(f"https://github.com/misode/mcmeta/archive/refs/tags/{VERSION_NAME}-assets.zip", stream=True) as res:
@@ -25,7 +37,7 @@ def download_github():
           progress.update(len(chunk))
           file.write(chunk)
 
-def pixel_width(glyph: str):
+def pixel_width(glyph: str, /):
   row_width = len(glyph) // 16
   mask = 0
   for i in range(16):
@@ -35,11 +47,14 @@ def pixel_width(glyph: str):
     return len(glyph) // 4
   return len(f"{mask:032b}".strip("0"))
 
-def read_unihex_archive(repo_archive: ZipFile, unihex_zip_path: str, *, width_overrides: dict[int, int]):
+def read_unihex_archive(repo_archive: ZipFile, /, unihex_zip_id: str, *, width_overrides: dict[int, int]):
   result = width_overrides
-  with ZipFile(repo_archive.open(f"mcmeta-{VERSION_NAME}-assets/assets/minecraft/{unihex_zip_path}")) as unihex_archive:
-    for hex_filename in filter(lambda n: n.endswith(".hex"), unihex_archive.namelist()):
-      with unihex_archive.open(hex_filename) as unihex_file:
+  namespace, path = resource_location(unihex_zip_id)
+  with ZipFile(repo_archive.open(f"mcmeta-{VERSION_NAME}-assets/assets/{namespace}/{path}")) as unihex_archive:
+    for filename in unihex_archive.namelist():
+      if not filename.endswith(".hex"):
+        continue
+      with unihex_archive.open(filename) as unihex_file:
         for unihex_entry in unihex_file.read().decode("utf-8").split("\n"):
           if not unihex_entry:
             continue
@@ -49,16 +64,17 @@ def read_unihex_archive(repo_archive: ZipFile, unihex_zip_path: str, *, width_ov
             result[codepoint] = pixel_width(glyph)
   return result
 
-def read_bitmap(repo_archive: ZipFile, font_id: str):
+def read_bitmap(repo_archive: ZipFile, /, font_id: str):
   result = {}
-  with repo_archive.open(f"mcmeta-{VERSION_NAME}-assets/assets/minecraft/font/{font_id}.json") as font_file:
+  namespace, path = resource_location(font_id)
+  with repo_archive.open(f"mcmeta-{VERSION_NAME}-assets/assets/{namespace}/font/{path}.json") as font_file:
     for provider in json.loads(font_file.read())["providers"]:
       if provider["type"] != "bitmap":
         continue
-      png_id = re.sub(r"^minecraft:", "", provider["file"])
+      png_namespace, png_path = resource_location(provider["file"])
       codepoints = provider["chars"]
       height = provider.get("height", 8)
-      texture = Image.open(repo_archive.open(f"mcmeta-{VERSION_NAME}-assets/assets/minecraft/textures/{png_id}")).convert("RGBA")
+      texture = Image.open(repo_archive.open(f"mcmeta-{VERSION_NAME}-assets/assets/{png_namespace}/textures/{png_path}")).convert("RGBA")
       row_count = len(codepoints)
       for y, row in enumerate(codepoints):
         col_count = len(row)
@@ -76,16 +92,26 @@ def read_bitmap(repo_archive: ZipFile, font_id: str):
             result[ord(codepoint)] = 0
   return result
 
-def read_space(repo_archive: ZipFile, font_id: str):
+def read_space(repo_archive: ZipFile, /, font_id: str):
   result = {}
-  with repo_archive.open(f"mcmeta-{VERSION_NAME}-assets/assets/minecraft/font/{font_id}.json") as space_font_file:
+  namespace, path = resource_location(font_id)
+  with repo_archive.open(f"mcmeta-{VERSION_NAME}-assets/assets/{namespace}/font/{path}.json") as space_font_file:
     for provider in json.loads(space_font_file.read())["providers"]:
       if provider["type"] != "space":
         continue
       result |= {ord(k): v for k, v in provider["advances"].items()}
   return result
 
-def pack_number(number: float | int):
+def resource_location(namespaced_id: str):
+  m = re.match(r"^(?:([a-z0-9_.]*):)?([a-z0-9_./]+)$", namespaced_id)
+  if m:
+    return (m.group(1) or "minecraft", m.group(2))
+  raise ValueError(f"Invalid resource location {namespaced_id}")
+
+def should_unifont_include(codepoint: int, /):
+  return INCLUDE_ALL_CODEPOINTS or codepoint in unifont_charset
+
+def pack_number(number: float | int, /):
   return int(number) if number == int(number) else number
 
 if not ROOT_FOLDER.is_dir():
@@ -102,6 +128,8 @@ alt_widths = {}
 il_alt_widths = {}
 space_widths = {}
 with ZipFile((ROOT_FOLDER / ASSETS_FILENAME).as_posix()) as asset_archive:
+  # Build charset
+  build_charset(asset_archive)
   # Unihex width overrides
   with asset_archive.open(f"mcmeta-{VERSION_NAME}-assets/assets/minecraft/font/include/unifont.json") as width_override_file:
     # Workaround for MC-278459 (the trailing comma in "Hangul Syllables" range comment field)
