@@ -280,7 +280,12 @@ Provides fixed width spaces.
 
 ## Shaders
 
-The functions are in `maputil:util.glsl`.
+The constants functions are in `maputil:util.glsl`.
+
+### `PI` & `TAU`
+
+- `PI` represents the mathematical constant π, the ratio of a circle's circumference to its diameter.
+- `TAU` is twice the value of `PI`.
 
 ### `roughlyEqual`
 
@@ -301,7 +306,7 @@ bool isGui(mat4 ProjMat)
 ### `getGuiScale`
 
 ```glsl
-int getGuiScale(mat4 ProjMat, vec2 ScreenSize)
+float getGuiScale(mat4 ProjMat, vec2 ScreenSize)
 ```
 
 - Returns the GUI scale value.
