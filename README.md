@@ -163,6 +163,10 @@ dispatch maputil:player_data[foo] to struct Foo {
 }
 ```
 
+## Shared Actionbar
+
+WIP
+
 ## Events
 
 Function with specific tags will be invoked by some events.
@@ -171,8 +175,9 @@ Function with specific tags will be invoked by some events.
 
 - The tick function.
 - To make sure the commands run in correct order, if the tick function interacts with MapUtil, it's recommended to hook the function on this tag instead of `#minecraft:tick`.
-- To be more specific, affected systems include:
+- To be more specific, the affected systems include:
   - Player Data Storage
+  - Shared Actionbar (WIP)
 
 ### `#maputil:player_event/on_first_join`
 
@@ -194,7 +199,7 @@ Function with specific tags will be invoked by some events.
 - Runs when an area effect cloud appears.
 - As & at the new AEC.
 - The `potion_contents.custom_effects` of the AEC is copied to `custom_effects` of data storage `maputil:aec`.
-- It's recommended to identify AECs in this function tag to avoid redundant entity NBT checks.
+- It's recommended to identify AECs in this function tag to avoid redundant entity NBT serialization.
   - Checking data storage is way faster than checking entity NBT.
   - You can give AECs tags in this function tag.
 
@@ -245,7 +250,7 @@ Function with specific tags will be invoked by some events.
 >
 > 1. modify `unifont_charset` to include other characters, or
 > 1. modify the behavior of function `build_charset()`, which has access to vanilla translations, or
-> 1. set `INCLUDE_ALL_CODEPOINTS` to `True` (not recommended).
+> 1. set `INCLUDE_ALL_CODEPOINTS` to `True` (not recommended - 227k entries is too heavy for the game).
 >
 > Example:
 > ```python
@@ -256,6 +261,7 @@ Function with specific tags will be invoked by some events.
 > ```python
 > def build_charset(repo_archive: ZipFile, /):
 >   # ...
+>   # Trivia: some languages don't use Roman numerals to represent enchantment levels
 >   key_patterns = [re.compile(r"key\.keyboard\..+"), re.compile(r"enchantment\.level\.\d+")]
 >   # ...
 > ```
