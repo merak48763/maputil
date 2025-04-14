@@ -316,3 +316,8 @@ float getGuiScale(mat4 ProjMat, vec2 ScreenSize)
 ```
 
 - Returns the GUI scale value.
+
+## Armor Trims
+
+- Provides empty trim textures on `wings` layer.
+  - This prevents elytra from displaying the "missing" texture when trimmed.

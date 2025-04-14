@@ -1,4 +1,4 @@
 .spyglassrc.json
 .vscode/
-font_generator_data/
+__pycache__/
 dist/

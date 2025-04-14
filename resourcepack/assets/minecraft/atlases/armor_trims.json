@@ -1,0 +1,41 @@
+{
+  "sources": [
+    {
+      "type": "paletted_permutations",
+      "palette_key": "maputil:trims/color_palettes/placeholder",
+      "permutations": {
+        "amethyst": "maputil:trims/color_palettes/placeholder",
+        "copper": "maputil:trims/color_palettes/placeholder",
+        "diamond": "maputil:trims/color_palettes/placeholder",
+        "emerald": "maputil:trims/color_palettes/placeholder",
+        "gold": "maputil:trims/color_palettes/placeholder",
+        "iron": "maputil:trims/color_palettes/placeholder",
+        "lapis": "maputil:trims/color_palettes/placeholder",
+        "netherite": "maputil:trims/color_palettes/placeholder",
+        "quartz": "maputil:trims/color_palettes/placeholder",
+        "redstone": "maputil:trims/color_palettes/placeholder",
+        "resin": "maputil:trims/color_palettes/placeholder"
+      },
+      "textures": [
+        "trims/entity/wings/bolt",
+        "trims/entity/wings/coast",
+        "trims/entity/wings/dune",
+        "trims/entity/wings/eye",
+        "trims/entity/wings/flow",
+        "trims/entity/wings/host",
+        "trims/entity/wings/raiser",
+        "trims/entity/wings/rib",
+        "trims/entity/wings/sentry",
+        "trims/entity/wings/shaper",
+        "trims/entity/wings/silence",
+        "trims/entity/wings/snout",
+        "trims/entity/wings/spire",
+        "trims/entity/wings/tide",
+        "trims/entity/wings/vex",
+        "trims/entity/wings/ward",
+        "trims/entity/wings/wayfinder",
+        "trims/entity/wings/wild"
+      ]
+    }
+  ]
+}

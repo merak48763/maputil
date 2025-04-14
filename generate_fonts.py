@@ -1,15 +1,12 @@
 # https://xkcd.com/1319/
 
-import requests, json, re, math
+import json, re, math
 from pathlib import Path
-from tqdm import tqdm
 from zipfile import ZipFile
 from PIL import Image
+from mcdata import *
 
-VERSION_NAME = "1.21.5"
-
-ROOT_FOLDER = Path("./font_generator_data")
-ASSETS_FILENAME = f"cache-{VERSION_NAME}-assets.zip"
+OUTPUT_FOLDER = Path("./generator_data/font_output")
 
 unifont_charset = set(range(256))
 INCLUDE_ALL_CODEPOINTS = False
@@ -27,15 +24,6 @@ def build_charset(repo_archive: ZipFile, /):
   for provider in default_font:
     if provider["type"] == "bitmap":
       unifont_charset.update(ord(c) for row in provider["chars"] for c in row)
-
-def download_github():
-  with requests.get(f"https://github.com/misode/mcmeta/archive/refs/tags/{VERSION_NAME}-assets.zip", stream=True) as res:
-    res.raise_for_status()
-    with open(ROOT_FOLDER / ASSETS_FILENAME, "wb") as file:
-      with tqdm(unit="B", unit_scale=True, desc=f"Downloading {VERSION_NAME}-assets") as progress:
-        for chunk in res.iter_content(chunk_size=16384):
-          progress.update(len(chunk))
-          file.write(chunk)
 
 def pixel_width(glyph: str, /):
   row_width = len(glyph) // 16
@@ -114,12 +102,10 @@ def should_unifont_include(codepoint: int, /):
 def pack_number(number: float | int, /):
   return int(number) if number == int(number) else number
 
-if not ROOT_FOLDER.is_dir():
-  ROOT_FOLDER.mkdir()
-if not (ROOT_FOLDER / "output").is_dir():
-  (ROOT_FOLDER / "output").mkdir()
-if not (ROOT_FOLDER / ASSETS_FILENAME).is_file():
-  download_github()
+if not OUTPUT_FOLDER.is_dir():
+  OUTPUT_FOLDER.mkdir()
+
+assets_path = require_mcdata("assets")
 
 unifont_widths = {}
 unifont_jp_widths = {}
@@ -127,7 +113,7 @@ default_widths = {}
 alt_widths = {}
 il_alt_widths = {}
 space_widths = {}
-with ZipFile(ROOT_FOLDER / ASSETS_FILENAME) as asset_archive:
+with ZipFile(assets_path) as asset_archive:
   # Build charset
   build_charset(asset_archive)
   # Unihex width overrides
@@ -176,7 +162,7 @@ uniform_negative = {
 }
 if len(unifont_jp_widths) == 0:
   del uniform_negative["providers"][0]
-with open(ROOT_FOLDER / "output/uniform_neg.json", "w") as file:
+with open(OUTPUT_FOLDER / "uniform_neg.json", "w") as file:
   json.dump(uniform_negative, file, indent=2)
 with open("resourcepack/assets/maputil/font/include/uniform_neg.json", "w") as file:
   json.dump(uniform_negative, file)
@@ -198,7 +184,7 @@ uniform_half_negative = {
 }
 if len(unifont_jp_widths) == 0:
   del uniform_half_negative["providers"][0]
-with open(ROOT_FOLDER / "output/uniform_half_neg.json", "w") as file:
+with open(OUTPUT_FOLDER / "uniform_half_neg.json", "w") as file:
   json.dump(uniform_half_negative, file, indent=2)
 with open("resourcepack/assets/maputil/font/include/uniform_half_neg.json", "w") as file:
   json.dump(uniform_half_negative, file)
@@ -211,7 +197,7 @@ default_negative = {
     }
   ]
 }
-with open(ROOT_FOLDER / "output/default_neg.json", "w") as file:
+with open(OUTPUT_FOLDER / "default_neg.json", "w") as file:
   json.dump(default_negative, file, indent=2)
 with open("resourcepack/assets/maputil/font/include/default_neg.json", "w") as file:
   json.dump(default_negative, file)
@@ -224,7 +210,7 @@ default_half_negative = {
     }
   ]
 }
-with open(ROOT_FOLDER / "output/default_half_neg.json", "w") as file:
+with open(OUTPUT_FOLDER / "default_half_neg.json", "w") as file:
   json.dump(default_half_negative, file, indent=2)
 with open("resourcepack/assets/maputil/font/include/default_half_neg.json", "w") as file:
   json.dump(default_half_negative, file)
@@ -237,7 +223,7 @@ alt_negative = {
     }
   ]
 }
-with open(ROOT_FOLDER / "output/alt_neg.json", "w") as file:
+with open(OUTPUT_FOLDER / "alt_neg.json", "w") as file:
   json.dump(alt_negative, file, indent=2)
 with open("resourcepack/assets/maputil/font/include/alt_neg.json", "w") as file:
   json.dump(alt_negative, file)
@@ -250,7 +236,7 @@ alt_half_negative = {
     }
   ]
 }
-with open(ROOT_FOLDER / "output/alt_half_neg.json", "w") as file:
+with open(OUTPUT_FOLDER / "alt_half_neg.json", "w") as file:
   json.dump(alt_half_negative, file, indent=2)
 with open("resourcepack/assets/maputil/font/include/alt_half_neg.json", "w") as file:
   json.dump(alt_half_negative, file)
@@ -263,7 +249,7 @@ il_alt_negative = {
     }
   ]
 }
-with open(ROOT_FOLDER / "output/illageralt_neg.json", "w") as file:
+with open(OUTPUT_FOLDER / "illageralt_neg.json", "w") as file:
   json.dump(il_alt_negative, file, indent=2)
 with open("resourcepack/assets/maputil/font/include/illageralt_neg.json", "w") as file:
   json.dump(il_alt_negative, file)
@@ -276,7 +262,7 @@ il_alt_half_negative = {
     }
   ]
 }
-with open(ROOT_FOLDER / "output/illageralt_half_neg.json", "w") as file:
+with open(OUTPUT_FOLDER / "illageralt_half_neg.json", "w") as file:
   json.dump(il_alt_half_negative, file, indent=2)
 with open("resourcepack/assets/maputil/font/include/illageralt_half_neg.json", "w") as file:
   json.dump(il_alt_half_negative, file)
@@ -289,7 +275,7 @@ space_negative = {
     }
   ]
 }
-with open(ROOT_FOLDER / "output/space_neg.json", "w") as file:
+with open(OUTPUT_FOLDER / "space_neg.json", "w") as file:
   json.dump(space_negative, file, indent=2)
 with open("resourcepack/assets/maputil/font/include/space_neg.json", "w") as file:
   json.dump(space_negative, file)
@@ -302,7 +288,7 @@ space_half_negative = {
     }
   ]
 }
-with open(ROOT_FOLDER / "output/space_half_neg.json", "w") as file:
+with open(OUTPUT_FOLDER / "space_half_neg.json", "w") as file:
   json.dump(space_half_negative, file, indent=2)
 with open("resourcepack/assets/maputil/font/include/space_half_neg.json", "w") as file:
   json.dump(space_half_negative, file)
