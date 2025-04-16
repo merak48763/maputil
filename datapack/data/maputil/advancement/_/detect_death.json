@@ -1,0 +1,10 @@
+{
+  "criteria": {
+    "hurt": {
+      "trigger": "entity_hurt_player"
+    }
+  },
+  "rewards": {
+    "function": "maputil:_/player/detect_death"
+  }
+}

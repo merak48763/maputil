@@ -1,11 +1,11 @@
 # MapUtil
 
-Utility datapack & resourcepack providing utilities for mapmaking.  
+Datapack & resourcepack providing utilities for mapmaking.  
 Minecraft version: 1.21.5
 
 # Mcdoc
 
-Mcdoc is a feature of VSCode [Spyglass extension](https://github.com/SpyglassMC/Spyglass).  
+Mcdoc is a feature of VSCode [Spyglass extension](https://marketplace.visualstudio.com/items?itemName=SPGoding.datapack-language-server).  
 If you're using the extension, you can copy `mcdoc/` folder to the root of your workspace.  
 It provides syntax highlighting and autocompletion of custom data provided by this pack.
 
@@ -189,6 +189,14 @@ Function with specific tags will be invoked by some events.
 - Runs when a player joins the world.
 - As & at the player.
 
+### `maputil:player_event/on_die`
+
+- Runs when a player dies.
+- As & at the death location of the player.
+- Subtick timing - this function tag runs:
+  - After death drop (if `keepInventory` = `false`).
+  - Before respawn (even if `doImmediateRespawn` = `true`).
+
 ### `#maputil:player_event/on_respawn`
 
 - Runs when a player respawns.
@@ -286,7 +294,7 @@ Provides fixed width spaces.
 
 ## Shaders
 
-The constants functions are in `maputil:util.glsl`.
+The constants and functions are defined in `maputil:util.glsl`.
 
 ### `PI` & `TAU`
 
