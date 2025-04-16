@@ -13,6 +13,6 @@ def zipdir(path, zip_filename, *, is_pack=True):
     if is_pack:
       zipfile.write("LICENSE", "LICENSE")
 
-zipdir("datapack", "dist/MapUtil-dp.zip")
-zipdir("resourcepack", "dist/MapUtil-rp.zip")
-zipdir("mcdoc", "dist/MapUtil-mcdoc.zip", is_pack=False)
+zipdir("datapack", "dist/maputil-dp.zip")
+zipdir("resourcepack", "dist/maputil-rp.zip")
+zipdir("mcdoc", "dist/maputil-mcdoc.zip", is_pack=False)
