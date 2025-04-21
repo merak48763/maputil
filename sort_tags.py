@@ -1,6 +1,6 @@
 import json
 
-filename = "datapack/data/maputil/tags/" + input("filename: datapack/data/maputil/tags/")
+filename = "datapack/data/mu/tags/" + input("filename: datapack/data/mu/tags/")
 if not filename.endswith(".json"):
   filename += ".json"
 

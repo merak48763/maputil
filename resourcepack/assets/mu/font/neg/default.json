@@ -1,0 +1,19 @@
+{
+  "providers": [
+    {
+      "type": "reference",
+      "id": "mu:include/space_neg"
+    },
+    {
+      "type": "reference",
+      "id": "mu:include/default_neg",
+      "filter": {
+        "uniform": false
+      }
+    },
+    {
+      "type": "reference",
+      "id": "mu:include/uniform_neg"
+    }
+  ]
+}

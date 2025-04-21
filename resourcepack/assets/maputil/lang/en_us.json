@@ -1,4 +1,0 @@
-{
-  "maputil.function.error": "[maputil] Error: %s",
-  "maputil.function.error.not_as_player": "function %s must be run as a player"
-}

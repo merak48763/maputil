@@ -6,7 +6,7 @@ type CommandStorage<T> = struct {
   root: T
 }
 
-dispatch :storage[maputil:_] to CommandStorage<InternalStorage>
+dispatch :storage[mu:_] to CommandStorage<InternalStorage>
 struct InternalStorage {
   macro?: struct MacroParam {
     id?: int @ 1..,
@@ -18,16 +18,16 @@ struct InternalStorage {
   custom_data?: CustomData
 }
 
-dispatch :storage[maputil:aec] to struct {
+dispatch :storage[mu:aec] to struct {
   custom_effects?: [MobEffectInstance]
 }
 
-dispatch :storage[maputil:player_data] to CommandStorage<PlayerData>
+dispatch :storage[mu:player_data] to CommandStorage<PlayerData>
 struct PlayerData {
-  [#[dispatcher_key="maputil:player_data"] string]: maputil:player_data[[%key]]
+  [#[dispatcher_key="mu:player_data"] string]: mu:player_data[[%key]]
 }
-dispatch maputil:player_data[%unknown] to any
+dispatch mu:player_data[%unknown] to any
 
-dispatch maputil:player_data[maputil] to struct UtilPlayerData {
+dispatch mu:player_data[mu] to struct UtilPlayerData {
   uuid?: #[uuid] int[] @ 4
 }

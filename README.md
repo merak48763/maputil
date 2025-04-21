@@ -13,54 +13,54 @@ It provides syntax highlighting and autocompletion of custom data provided by th
 
 ## Block Tags
 
-- `#maputil:no_hitbox`
+- `#mu:no_hitbox`
   - All blocks which don't block projectile motion.
   - Includes blocks which slows some entities down (e.g. cobweb).
 
 ## Entity Tags
 
-- `#maputil:monster`
+- `#mu:monster`
   - All monsters.
   - `rabbit` is not included, so killer bunny may require extra tests.
-- `#maputil:non_living`
+- `#mu:non_living`
   - Non living entities.
   - It's a bit different from the gamecode `LivingEntity` definition - `armor_stand` is included in this tag.
 
 ## Mob Effect Tags
 
-- `#maputil:beneficial`
+- `#mu:beneficial`
   - All beneficial effects.
-- `#maputil:neutral`
+- `#mu:neutral`
   - All neutral effects.
-- `#maputil:harmful`
+- `#mu:harmful`
   - All harmful effects.
-- `#maputil:instantaneous`
+- `#mu:instantaneous`
   - All instantaneous effects.
-- `#maputil:status`
+- `#mu:status`
   - All non-instantaneous effects.
 
 ## Predicates
 
-- `maputil:has_passenger`
+- `mu:has_passenger`
   - Context: Entity
   - Passes if the entity has passenger.
-- `maputil:has_vehicle`
+- `mu:has_vehicle`
   - Context: Entity
   - Passes if the entity has vehicle.
-- `maputil:is_killer_bunny`
+- `mu:is_killer_bunny`
   - Context: Entity
   - Passes if the entity is killer bunny
 
 ## Item Modifiers
 
-- `maputil:grow`
+- `mu:grow`
   - Item count +1.
-- `maputil:shrink`
+- `mu:shrink`
   - Item count -1.
 
 ## Function Macro
 
-### `maputil:callback_macro`
+### `mu:callback_macro`
 
 ```mcfunction
 $function $(function)
@@ -71,8 +71,8 @@ $function $(function)
 Triggers functions when an interaction is clicked.
 
 - The functions are recorded in custom data of the interaction.
-  - `maputil.on_interact`: Right click reaction
-  - `maputil.on_attack`: Left click reaction
+  - `mu.on_interact`: Right click reaction
+  - `mu.on_attack`: Left click reaction
 
 ### Data Structure
 
@@ -84,7 +84,7 @@ Triggers functions when an interaction is clicked.
 ```mcfunction
 summon interaction ~ ~ ~ { \
   data: { \
-    maputil: { \
+    mu: { \
       on_interact: {as_player: "foo:bar"} \
     } \
   } \
@@ -98,29 +98,29 @@ Texts are refreshed once per second.
 
 ### Text Display
 
-- The text display should have `maputil.translated` tag.
+- The text display should have `mu.translated` tag.
 
 #### Example
 
 ```mcfunction
 summon text_display ~ ~ ~ { \
   text: {translate: "block.minecraft.stone"}, \
-  Tags: ["maputil.translated"], \
+  Tags: ["mu.translated"], \
 }
 ```
 
 ### Sign
 
-- Summon a marker with `maputil.translated` tag at the location of the sign.
-- The sign should have `maputil.translated` custom data.
+- Summon a marker with `mu.translated` tag at the location of the sign.
+- The sign should have `mu.translated` custom data.
   - Data value: Empty object `{}`.
 - The marker is automatically removed when the sign disappears.
 
 #### Example
 
 ```mcfunction
-summon marker ~ ~ ~ {Tags: ["maputil.translated"]}
-data modify block ~ ~ ~ components.minecraft:custom_data.maputil.translated set value {}
+summon marker ~ ~ ~ {Tags: ["mu.translated"]}
+data modify block ~ ~ ~ components.minecraft:custom_data.mu.translated set value {}
 ```
 
 ## Player Data Storage System
@@ -129,22 +129,22 @@ Stores per-player data in data storage.
 
 ### Load data
 
-Always run function `maputil:load_player_data` as the player before use.
+Always run function `mu:load_player_data` as the player before use.
 
 ### Data structure
 
-Data storage ID: `maputil:player_data`
+Data storage ID: `mu:player_data`
 
 - compound `root`: Stores arbitrary data.
-  - compound `maputil`: Data provided by MapUtil.
+  - compound `mu`: Data provided by MapUtil.
     - int\[4\] `uuid`: UUID of the player. Do NOT modify this field.
 
 ### Example
 
 ```mcfunction
 # As a player
-function maputil:load_player_data
-data modify storage maputil:player_data root.foo set value "bar"
+function mu:load_player_data
+data modify storage mu:player_data root.foo set value "bar"
 ```
 
 ### Mcdoc Support
@@ -152,13 +152,13 @@ data modify storage maputil:player_data root.foo set value "bar"
 > [!Note]
 > [Here](https://spyglassmc.com/user/mcdoc/) is mcdoc syntax documentation.
 
-The dispatcher of player data storage is `maputil:player_data`.
+The dispatcher of player data storage is `mu:player_data`.
 
 #### Example
 
 ```
 // Specifies data type of root.foo
-dispatch maputil:player_data[foo] to struct Foo {
+dispatch mu:player_data[foo] to struct Foo {
   bar?: string
 }
 ```
@@ -171,7 +171,7 @@ WIP
 
 Function with specific tags will be invoked by some events.
 
-### `#maputil:tick`
+### `#mu:tick`
 
 - The tick function.
 - To make sure the commands run in correct order, if the tick function interacts with MapUtil, it's recommended to hook the function on this tag instead of `#minecraft:tick`.
@@ -179,17 +179,17 @@ Function with specific tags will be invoked by some events.
   - Player Data Storage
   - Shared Actionbar (WIP)
 
-### `#maputil:player_event/on_first_join`
+### `#mu:player_event/on_first_join`
 
 - Runs when a player first joins the world.
 - As & at the player.
 
-### `#maputil:player_event/on_login`
+### `#mu:player_event/on_login`
 
 - Runs when a player joins the world.
 - As & at the player.
 
-### `maputil:player_event/on_die`
+### `mu:player_event/on_die`
 
 - Runs when a player dies.
 - As & at the death location of the player.
@@ -197,16 +197,16 @@ Function with specific tags will be invoked by some events.
   - After death drop (if `keepInventory` = `false`).
   - Before respawn (even if `doImmediateRespawn` = `true`).
 
-### `#maputil:player_event/on_respawn`
+### `#mu:player_event/on_respawn`
 
 - Runs when a player respawns.
 - As & at the player.
 
-### `#maputil:entity_event/on_aec_spawned`
+### `#mu:entity_event/on_aec_spawned`
 
 - Runs when an area effect cloud appears.
 - As & at the new AEC.
-- The `potion_contents.custom_effects` of the AEC is copied to `custom_effects` of data storage `maputil:aec`.
+- The `potion_contents.custom_effects` of the AEC is copied to `custom_effects` of data storage `mu:aec`.
 - It's recommended to identify AECs in this function tag to avoid redundant entity NBT serialization.
   - Checking data storage is way faster than checking entity NBT.
   - You can give AECs tags in this function tag.
@@ -227,7 +227,7 @@ Function with specific tags will be invoked by some events.
 
 - The classic Mojangles font, regardless of Force Unicode settings.
 
-### `maputil:neg/*`
+### `mu:neg/*`
 
 - Negative width version of fonts.
 - Including:
@@ -237,7 +237,7 @@ Function with specific tags will be invoked by some events.
   - `neg/alt`
   - `neg/illageralt`
 
-### `maputil:half_neg/*`
+### `mu:half_neg/*`
 
 - Half negative width version of fonts.
 - Including:
@@ -274,7 +274,7 @@ Function with specific tags will be invoked by some events.
 >   # ...
 > ```
 
-### `maputil:space`
+### `mu:space`
 
 Provides fixed width spaces.
 
@@ -294,7 +294,7 @@ Provides fixed width spaces.
 
 ## Shaders
 
-The constants and functions are defined in `maputil:util.glsl`.
+The constants and functions are defined in `mu:util.glsl`.
 
 ### `PI` & `TAU`
 

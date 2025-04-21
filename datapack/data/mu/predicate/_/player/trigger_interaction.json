@@ -1,0 +1,18 @@
+{
+  "condition": "inverted",
+  "term": {
+    "condition": "entity_properties",
+    "entity": "this",
+    "predicate": {
+      "type_specific": {
+        "type": "player",
+        "advancements": {
+          "mu:_/trigger_interaction": {
+            "left_click": false,
+            "right_click": false
+          }
+        }
+      }
+    }
+  }
+}

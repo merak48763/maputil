@@ -164,7 +164,7 @@ if len(unifont_jp_widths) == 0:
   del uniform_negative["providers"][0]
 with open(OUTPUT_FOLDER / "uniform_neg.json", "w") as file:
   json.dump(uniform_negative, file, indent=2)
-with open("resourcepack/assets/maputil/font/include/uniform_neg.json", "w") as file:
+with open("resourcepack/assets/mu/font/include/uniform_neg.json", "w") as file:
   json.dump(uniform_negative, file)
 
 uniform_half_negative = {
@@ -186,7 +186,7 @@ if len(unifont_jp_widths) == 0:
   del uniform_half_negative["providers"][0]
 with open(OUTPUT_FOLDER / "uniform_half_neg.json", "w") as file:
   json.dump(uniform_half_negative, file, indent=2)
-with open("resourcepack/assets/maputil/font/include/uniform_half_neg.json", "w") as file:
+with open("resourcepack/assets/mu/font/include/uniform_half_neg.json", "w") as file:
   json.dump(uniform_half_negative, file)
 
 default_negative = {
@@ -199,7 +199,7 @@ default_negative = {
 }
 with open(OUTPUT_FOLDER / "default_neg.json", "w") as file:
   json.dump(default_negative, file, indent=2)
-with open("resourcepack/assets/maputil/font/include/default_neg.json", "w") as file:
+with open("resourcepack/assets/mu/font/include/default_neg.json", "w") as file:
   json.dump(default_negative, file)
 
 default_half_negative = {
@@ -212,7 +212,7 @@ default_half_negative = {
 }
 with open(OUTPUT_FOLDER / "default_half_neg.json", "w") as file:
   json.dump(default_half_negative, file, indent=2)
-with open("resourcepack/assets/maputil/font/include/default_half_neg.json", "w") as file:
+with open("resourcepack/assets/mu/font/include/default_half_neg.json", "w") as file:
   json.dump(default_half_negative, file)
 
 alt_negative = {
@@ -225,7 +225,7 @@ alt_negative = {
 }
 with open(OUTPUT_FOLDER / "alt_neg.json", "w") as file:
   json.dump(alt_negative, file, indent=2)
-with open("resourcepack/assets/maputil/font/include/alt_neg.json", "w") as file:
+with open("resourcepack/assets/mu/font/include/alt_neg.json", "w") as file:
   json.dump(alt_negative, file)
 
 alt_half_negative = {
@@ -238,7 +238,7 @@ alt_half_negative = {
 }
 with open(OUTPUT_FOLDER / "alt_half_neg.json", "w") as file:
   json.dump(alt_half_negative, file, indent=2)
-with open("resourcepack/assets/maputil/font/include/alt_half_neg.json", "w") as file:
+with open("resourcepack/assets/mu/font/include/alt_half_neg.json", "w") as file:
   json.dump(alt_half_negative, file)
 
 il_alt_negative = {
@@ -251,7 +251,7 @@ il_alt_negative = {
 }
 with open(OUTPUT_FOLDER / "illageralt_neg.json", "w") as file:
   json.dump(il_alt_negative, file, indent=2)
-with open("resourcepack/assets/maputil/font/include/illageralt_neg.json", "w") as file:
+with open("resourcepack/assets/mu/font/include/illageralt_neg.json", "w") as file:
   json.dump(il_alt_negative, file)
 
 il_alt_half_negative = {
@@ -264,7 +264,7 @@ il_alt_half_negative = {
 }
 with open(OUTPUT_FOLDER / "illageralt_half_neg.json", "w") as file:
   json.dump(il_alt_half_negative, file, indent=2)
-with open("resourcepack/assets/maputil/font/include/illageralt_half_neg.json", "w") as file:
+with open("resourcepack/assets/mu/font/include/illageralt_half_neg.json", "w") as file:
   json.dump(il_alt_half_negative, file)
 
 space_negative = {
@@ -277,7 +277,7 @@ space_negative = {
 }
 with open(OUTPUT_FOLDER / "space_neg.json", "w") as file:
   json.dump(space_negative, file, indent=2)
-with open("resourcepack/assets/maputil/font/include/space_neg.json", "w") as file:
+with open("resourcepack/assets/mu/font/include/space_neg.json", "w") as file:
   json.dump(space_negative, file)
 
 space_half_negative = {
@@ -290,5 +290,5 @@ space_half_negative = {
 }
 with open(OUTPUT_FOLDER / "space_half_neg.json", "w") as file:
   json.dump(space_half_negative, file, indent=2)
-with open("resourcepack/assets/maputil/font/include/space_half_neg.json", "w") as file:
+with open("resourcepack/assets/mu/font/include/space_half_neg.json", "w") as file:
   json.dump(space_half_negative, file)

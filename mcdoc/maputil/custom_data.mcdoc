@@ -1,4 +1,4 @@
-dispatch mcdoc:custom_data[maputil] to struct CustomData {
+dispatch mcdoc:custom_data[mu] to struct CustomData {
   /// Applies on: Sign (block)
   /// Exists if the text is translated and therefore needs to be refreshed periodically
   translated?: struct {

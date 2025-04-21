@@ -1,0 +1,12 @@
+{
+  "providers": [
+    {
+      "type": "reference",
+      "id": "mu:include/space_half_neg"
+    },
+    {
+      "type": "reference",
+      "id": "mu:include/uniform_half_neg"
+    }
+  ]
+}

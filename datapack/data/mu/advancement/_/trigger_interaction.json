@@ -1,0 +1,29 @@
+{
+  "criteria": {
+    "left_click": {
+      "trigger": "player_hurt_entity",
+      "conditions": {
+        "entity": {
+          "type": "interaction",
+          "predicates": {
+            "custom_data": "{mu: {on_attack: {}}}"
+          }
+        }
+      }
+    },
+    "right_click": {
+      "trigger": "player_interacted_with_entity",
+      "conditions": {
+        "entity": {
+          "type": "interaction",
+          "predicates": {
+            "custom_data": "{mu: {on_interact: {}}}"
+          }
+        }
+      }
+    },
+    "no_log_spam": {
+      "trigger": "impossible"
+    }
+  }
+}

@@ -2,19 +2,19 @@
   "sources": [
     {
       "type": "paletted_permutations",
-      "palette_key": "maputil:trims/color_palettes/placeholder",
+      "palette_key": "mu:trims/color_palettes/placeholder",
       "permutations": {
-        "amethyst": "maputil:trims/color_palettes/placeholder",
-        "copper": "maputil:trims/color_palettes/placeholder",
-        "diamond": "maputil:trims/color_palettes/placeholder",
-        "emerald": "maputil:trims/color_palettes/placeholder",
-        "gold": "maputil:trims/color_palettes/placeholder",
-        "iron": "maputil:trims/color_palettes/placeholder",
-        "lapis": "maputil:trims/color_palettes/placeholder",
-        "netherite": "maputil:trims/color_palettes/placeholder",
-        "quartz": "maputil:trims/color_palettes/placeholder",
-        "redstone": "maputil:trims/color_palettes/placeholder",
-        "resin": "maputil:trims/color_palettes/placeholder"
+        "amethyst": "mu:trims/color_palettes/placeholder",
+        "copper": "mu:trims/color_palettes/placeholder",
+        "diamond": "mu:trims/color_palettes/placeholder",
+        "emerald": "mu:trims/color_palettes/placeholder",
+        "gold": "mu:trims/color_palettes/placeholder",
+        "iron": "mu:trims/color_palettes/placeholder",
+        "lapis": "mu:trims/color_palettes/placeholder",
+        "netherite": "mu:trims/color_palettes/placeholder",
+        "quartz": "mu:trims/color_palettes/placeholder",
+        "redstone": "mu:trims/color_palettes/placeholder",
+        "resin": "mu:trims/color_palettes/placeholder"
       },
       "textures": [
         "trims/entity/wings/bolt",
