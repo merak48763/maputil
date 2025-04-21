@@ -370,7 +370,7 @@ float getGuiScale(mat4 ProjMat, vec2 ScreenSize)
 
 Only breaking changes are listed.
 
-## v1.2.0 (upcoming)
+## v1.2.0
 
 - Rename the namespace `maputil:` to `mu:`.
   - Tag prefixes are also affected (`maputil.` → `mu.`).
