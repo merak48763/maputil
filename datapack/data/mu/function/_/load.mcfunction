@@ -7,4 +7,3 @@ scoreboard objectives add mu._leave_game custom:leave_game {"text": "don't touch
 execute unless data storage mu:player_data root run data modify storage mu:player_data root set value {}
 
 schedule function mu:_/scheduled_1s 0.4s replace
-schedule function mu:_/scheduled_10s 0.7s replace
