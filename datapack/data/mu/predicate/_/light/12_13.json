@@ -1,0 +1,11 @@
+{
+  "condition": "location_check",
+  "predicate": {
+    "light": {
+      "light": {
+        "min": 12,
+        "max": 13
+      }
+    }
+  }
+}

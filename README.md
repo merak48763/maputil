@@ -91,13 +91,17 @@ It provides syntax highlighting and autocompletion of custom data provided by th
 - `mu:shrink`
   - Item count -1.
 
-## Function Macro
+## Functions
 
 ### `mu:callback_macro`
 
 ```mcfunction
 $function $(function)
 ```
+
+### `mu:query_light`
+
+- Returns light level of the execution position.
 
 ## Interaction System
 
