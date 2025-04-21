@@ -41,15 +41,48 @@ It provides syntax highlighting and autocompletion of custom data provided by th
 
 ## Predicates
 
+- `mu:is_baby`
+  - Context: Entity
+  - Passes if the entity is baby.
+- `mu:is_flying`
+  - Context: Entity
+  - Passes if the entity is flying.
+- `mu:is_on_fire`
+  - Context: Entity
+  - Passes if the entity is on fire.
+- `mu:is_on_ground`
+  - Context: Entity
+  - Passes if the entity is on ground.
+- `mu:is_sneaking`
+  - Context: Entity
+  - Passes if the entity is sneaking.
+- `mu:is_sprinting`
+  - Context: Entity
+  - Passes if the entity is sprinting.
+- `mu:is_swimming`
+  - Context: Entity
+  - Passes if the entity is swimming.
 - `mu:has_passenger`
   - Context: Entity
   - Passes if the entity has passenger.
 - `mu:has_vehicle`
   - Context: Entity
   - Passes if the entity has vehicle.
-- `mu:is_killer_bunny`
+- `mu:is_in_water`
   - Context: Entity
-  - Passes if the entity is killer bunny
+  - Passes if the entity is in water (checks for feet location).
+- `mu:rabbit/is_evil`
+  - Context: Entity
+  - Passes if the entity is killer bunny.
+- `mu:player/can_crit`
+  - Context: Entity (player)
+  - Passes if the player may be able to perform crit attack.
+  - Some conditions are not checked in this predicate:
+    1. Player's attack cooldown must be >90%
+    2. The victim must be `LivingEntity`
+- `mu:location/is_water`
+  - Context: Location
+  - Passes if the location is in water.
 
 ## Item Modifiers
 
@@ -176,7 +209,6 @@ Function with specific tags will be invoked by some events.
 - The tick function.
 - To make sure the commands run in correct order, if the tick function interacts with MapUtil, it's recommended to hook the function on this tag instead of `#minecraft:tick`.
 - To be more specific, the affected systems include:
-  - Player Data Storage
   - Shared Actionbar (WIP)
 
 ### `#mu:player_event/on_first_join`
@@ -329,3 +361,13 @@ float getGuiScale(mat4 ProjMat, vec2 ScreenSize)
 
 - Provides empty trim textures on `wings` layer.
   - This prevents elytra from displaying the "missing" texture when trimmed.
+
+# Changelog
+
+Only breaking changes are listed.
+
+## v1.2.0 (upcoming)
+
+- Rename the namespace `maputil:` to `mu:`.
+  - Tag prefixes are also affected (`maputil.` → `mu.`).
+- Rename the predicate `maputil:is_killer_bunny` to `mu:rabbit/is_evil`

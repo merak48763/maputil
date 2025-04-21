@@ -1,0 +1,69 @@
+{
+  "condition": "inverted",
+  "term": {
+    "condition": "any_of",
+    "terms": [
+      {
+        "condition": "entity_properties",
+        "entity": "this",
+        "predicate": {
+          "movement": {
+            "fall_distance": 0
+          }
+        }
+      },
+      {
+        "condition": "entity_properties",
+        "entity": "this",
+        "predicate": {
+          "flags": {
+            "is_on_ground": true
+          }
+        }
+      },
+      {
+        "condition": "entity_properties",
+        "entity": "this",
+        "predicate": {
+          "location": {
+            "block": {"blocks": "#climbable"}
+          }
+        }
+      },
+      {
+        "condition": "entity_properties",
+        "entity": "this",
+        "predicate": {
+          "location": {
+            "fluid": {"fluids": "#water"}
+          }
+        }
+      },
+      {
+        "condition": "entity_properties",
+        "entity": "this",
+        "predicate": {
+          "effects": {
+            "blindness": {}
+          }
+        }
+      },
+      {
+        "condition": "entity_properties",
+        "entity": "this",
+        "predicate": {
+          "vehicle": {}
+        }
+      },
+      {
+        "condition": "entity_properties",
+        "entity": "this",
+        "predicate": {
+          "flags": {
+            "is_sprinting": true
+          }
+        }
+      }
+    ]
+  }
+}

@@ -12,6 +12,7 @@ def zipdir(path, zip_filename, *, is_pack=True):
         zipfile.write(os.path.join(root, file), relpath)
     if is_pack:
       zipfile.write("LICENSE", "LICENSE")
+      zipfile.write("README.md", "README.md")
 
 zipdir("datapack", "dist/maputil-dp.zip")
 zipdir("resourcepack", "dist/maputil-rp.zip")
