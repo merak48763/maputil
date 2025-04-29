@@ -385,4 +385,4 @@ Only breaking changes are listed.
 
 ## v1.3.0
 
-- Rename the entity type tag `#mu:non_living` to `#mu:object_entity`. Exclude armor stand from this tag.
+- Rename the entity type tag `#mu:non_living` to `#mu:object_entity`.
