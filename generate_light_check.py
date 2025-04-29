@@ -22,14 +22,6 @@ def range_match(min: int, max: int):
     json.dump(predicate, file, indent=2)
     file.write("\n")
 
-for i in range(8):
-  exact_match(i*2)
-for i in range(4):
-  range_match(i*4, i*4+1)
-for i in range(2):
-  range_match(i*8, i*8+3)
-range_match(0, 7)
-
 for i in [1, 2, 4, 8]:
   for j in range(i):
     lb1 = j * (16//i)
