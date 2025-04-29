@@ -41,6 +41,12 @@ It provides syntax highlighting and autocompletion of custom data provided by th
 
 ## Predicates
 
+- `mu:fractional_chance`
+  - Context: Any
+  - Passes randomly.
+  - The chance is controlled by data storage `mu:fractional_chance`. Data structure:
+    - int `n`: Numerator.
+    - int `d`: Denominator.
 - `mu:is_baby`
   - Context: Entity
   - Passes if the entity is baby.

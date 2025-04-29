@@ -1,0 +1,11 @@
+{
+  "condition": "value_check",
+  "value": {
+    "type": "uniform",
+    "min": 1,
+    "max": {"type": "storage", "storage": "mu:fractional_chance", "path": "d"}
+  },
+  "range": {
+    "max": {"type": "storage", "storage": "mu:fractional_chance", "path": "n"}
+  }
+}

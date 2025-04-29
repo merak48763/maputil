@@ -5,5 +5,6 @@ execute unless score #cache_data mu._id matches 0.. run scoreboard players set #
 scoreboard objectives add mu._leave_game custom:leave_game {"text": "don't touch", "color": "gray"}
 
 execute unless data storage mu:player_data root run data modify storage mu:player_data root set value {}
+data merge storage mu:fractional_chance {n: 0, d: 1}
 
 schedule function mu:_/scheduled_1s 0.4s replace
