@@ -32,6 +32,7 @@
     "glow_squid",
     "goat",
     "guardian",
+    {"id": "happy_ghast", "required": false},
     "hoglin",
     "horse",
     "husk",
