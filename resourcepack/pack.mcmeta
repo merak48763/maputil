@@ -1,7 +1,15 @@
 {
   "pack": {
     "pack_format": 55,
-    "supported_formats": [55, 55],
+    "supported_formats": [55, 59],
     "description": {"text": "https://github.com/merak48763/maputil", "color": "#8888ff"}
+  },
+  "overlays": {
+    "entries": [
+      {
+        "directory": "ucsur_font",
+        "formats": [59, 59]
+      }
+    ]
   }
 }

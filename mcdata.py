@@ -2,7 +2,7 @@ from pathlib import Path
 from tqdm import tqdm
 import requests
 
-VERSION_NAME = "1.21.5"
+VERSION_NAME = "25w18a"
 CACHE_FOLDER = Path("./generator_data/mcdata_cache")
 
 def require_mcdata(branch: str):

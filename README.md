@@ -1,7 +1,7 @@
 # MapUtil
 
 Datapack & resourcepack providing utilities for mapmaking.  
-Minecraft version: 1.21.5
+Minecraft version: 1.21.5 ~ 1.21.6
 
 # Mcdoc
 
@@ -263,12 +263,17 @@ Function with specific tags will be invoked by some events.
 
 - The classic Mojangles font, regardless of Force Unicode settings.
 
+### `minecraft:ucsur` (1.21.6+)
+
+- The Unifont Under-CSUR characters.
+
 ### `mu:neg/*`
 
 - Negative width version of fonts.
 - Including:
   - `neg/default`
   - `neg/seven`
+  - `neg/ucsur` (1.21.6+)
   - `neg/uniform`
   - `neg/alt`
   - `neg/illageralt`
@@ -279,6 +284,7 @@ Function with specific tags will be invoked by some events.
 - Including:
   - `half_neg/default`
   - `half_neg/seven`
+  - `half_neg/ucsur` (1.21.6+)
   - `half_neg/uniform`
   - `half_neg/alt`
   - `half_neg/illageralt`

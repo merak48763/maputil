@@ -18,9 +18,9 @@ def build_charset(repo_archive: ZipFile, /):
     if not filename_pattern.match(lang_filename):
       continue
     with repo_archive.open(lang_filename) as lang_file:
-      translation = json.loads(lang_file.read())
+      translation = json.load(lang_file)
       unifont_charset.update(ord(c) for k, v in translation.items() if any(p.match(k) for p in key_patterns) for c in v)
-  default_font = json.loads(repo_archive.open(f"mcmeta-{VERSION_NAME}-assets/assets/minecraft/font/include/default.json").read())["providers"]
+  default_font = json.load(repo_archive.open(f"mcmeta-{VERSION_NAME}-assets/assets/minecraft/font/include/default.json"))["providers"]
   for provider in default_font:
     if provider["type"] == "bitmap":
       unifont_charset.update(ord(c) for row in provider["chars"] for c in row)
@@ -56,7 +56,7 @@ def read_bitmap(repo_archive: ZipFile, /, font_id: str):
   result = {}
   namespace, path = resource_location(font_id)
   with repo_archive.open(f"mcmeta-{VERSION_NAME}-assets/assets/{namespace}/font/{path}.json") as font_file:
-    for provider in json.loads(font_file.read())["providers"]:
+    for provider in json.load(font_file)["providers"]:
       if provider["type"] != "bitmap":
         continue
       png_namespace, png_path = resource_location(provider["file"])
@@ -84,7 +84,7 @@ def read_space(repo_archive: ZipFile, /, font_id: str):
   result = {}
   namespace, path = resource_location(font_id)
   with repo_archive.open(f"mcmeta-{VERSION_NAME}-assets/assets/{namespace}/font/{path}.json") as space_font_file:
-    for provider in json.loads(space_font_file.read())["providers"]:
+    for provider in json.load(space_font_file)["providers"]:
       if provider["type"] != "space":
         continue
       result |= {ord(k): v for k, v in provider["advances"].items()}
@@ -109,6 +109,7 @@ assets_path = require_mcdata("assets")
 
 unifont_widths = {}
 unifont_jp_widths = {}
+unifont_pua_widths = {}
 default_widths = {}
 alt_widths = {}
 il_alt_widths = {}
@@ -118,11 +119,9 @@ with ZipFile(assets_path) as asset_archive:
   build_charset(asset_archive)
   # Unihex width overrides
   with asset_archive.open(f"mcmeta-{VERSION_NAME}-assets/assets/minecraft/font/include/unifont.json") as width_override_file:
-    # Workaround for MC-278459 (the trailing comma in "Hangul Syllables" range comment field)
-    # Why, Mojang? Why?
-    fixed_file_content = re.sub(r",\s*]", "]", width_override_file.read().decode("utf-8"))
-    for provider in json.loads(fixed_file_content)["providers"]:
-      if provider["type"] != "unihex":
+    # Requires a workaround for MC-278459 in 1.21.5
+    for provider in json.load(width_override_file)["providers"]:
+      if provider["type"] != "unihex" or "size_overrides" not in provider:
         continue
       is_jp_variant = provider.get("filter", {}).get("jp", False)
       for override in provider["size_overrides"]:
@@ -133,10 +132,22 @@ with ZipFile(assets_path) as asset_archive:
             unifont_jp_widths[codepoint] = override["right"] - override["left"] + 1
           else:
             unifont_widths[codepoint] = override["right"] - override["left"] + 1
+  # Unihex UCSUR width overrides
+  with asset_archive.open(f"mcmeta-{VERSION_NAME}-assets/assets/minecraft/font/include/unifont_pua.json") as width_override_file:
+    for provider in json.load(width_override_file)["providers"]:
+      if provider["type"] != "unihex" or "size_overrides" not in provider:
+        continue
+      for override in provider["size_overrides"]:
+        for codepoint in range(ord(override["from"]), ord(override["to"]) + 1):
+          if not should_unifont_include(codepoint):
+            continue
+          unifont_pua_widths[codepoint] = override["right"] - override["left"] + 1
   # Unihex
   unifont_widths = read_unihex_archive(asset_archive, "font/unifont.zip", width_overrides=unifont_widths)
   # Unihex JP
   unifont_jp_widths = read_unihex_archive(asset_archive, "font/unifont_jp.zip", width_overrides=unifont_jp_widths)
+  # Unihex PUA (UCSUR)
+  unifont_pua_widths = read_unihex_archive(asset_archive, "font/unifont_pua.zip", width_overrides=unifont_pua_widths)
   # Bitmap
   default_widths = read_bitmap(asset_archive, "include/default")
   alt_widths = read_bitmap(asset_archive, "alt")
@@ -188,6 +199,32 @@ with open(OUTPUT_FOLDER / "uniform_half_neg.json", "w") as file:
   json.dump(uniform_half_negative, file, indent=2)
 with open("resourcepack/assets/mu/font/include/uniform_half_neg.json", "w") as file:
   json.dump(uniform_half_negative, file)
+
+uniform_pua_negative = {
+  "providers": [
+    {
+      "type": "space",
+      "advances": {chr(k): -(v // 2 + 1) for k, v in sorted(unifont_pua_widths.items(), key=lambda x: x[0])}
+    }
+  ]
+}
+with open(OUTPUT_FOLDER / "uniform_pua_neg.json", "w") as file:
+  json.dump(uniform_pua_negative, file, indent=2)
+with open("resourcepack/assets/mu/font/include/uniform_pua_neg.json", "w") as file:
+  json.dump(uniform_pua_negative, file)
+
+uniform_pua_half_negative = {
+  "providers": [
+    {
+      "type": "space",
+      "advances": {chr(k): pack_number(-(v // 2 + 1) / 2) for k, v in sorted(unifont_pua_widths.items(), key=lambda x: x[0])}
+    }
+  ]
+}
+with open(OUTPUT_FOLDER / "uniform_pua_half_neg.json", "w") as file:
+  json.dump(uniform_pua_half_negative, file, indent=2)
+with open("resourcepack/assets/mu/font/include/uniform_pua_half_neg.json", "w") as file:
+  json.dump(uniform_pua_half_negative, file)
 
 default_negative = {
   "providers": [
