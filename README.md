@@ -19,12 +19,13 @@ It provides syntax highlighting and autocompletion of custom data provided by th
 
 ## Entity Tags
 
+- `#mu:living_entity`
+  - The gamecode `LivingEntity` types.
 - `#mu:monster`
   - All monsters.
   - `rabbit` is not included, so killer bunny may require extra tests.
-- `#mu:non_living`
-  - Non living entities.
-  - It's a bit different from the gamecode `LivingEntity` definition - `armor_stand` is included in this tag.
+- `#mu:object_entity`
+  - Entity types that intuitively should not be attacked.
 
 ## Mob Effect Tags
 
@@ -380,4 +381,8 @@ Only breaking changes are listed.
 
 - Rename the namespace `maputil:` to `mu:`.
   - Tag prefixes are also affected (`maputil.` → `mu.`).
-- Rename the predicate `maputil:is_killer_bunny` to `mu:rabbit/is_evil`
+- Rename the predicate `maputil:is_killer_bunny` to `mu:rabbit/is_evil`.
+
+## v1.3.0
+
+- Rename the entity type tag `#mu:non_living` to `#mu:object_entity`. Exclude armor stand from this tag.
