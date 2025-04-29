@@ -1,10 +1,11 @@
 import json, re
 
 class TagEncoder(json.JSONEncoder):
-  OPTIONAL_ENTRY_PATTERN = re.compile(r"\{\s*\"id\":\s*\"(\w+)\",\s*\"required\":\s*false\s*\}")
+  OPTIONAL_ENTRY_RE = r'\{\s+"id":\s"(\w+)",\s+"required":\sfalse\s+\}'
+  SIMPLIFIED_OPTIONAL_ENTRY = r'{"id": "\g<1>", "required": false}'
   def encode(self, obj):
     json_repr = super().encode(obj)
-    return TagEncoder.OPTIONAL_ENTRY_PATTERN.sub(r'{"id": "\g<1>", "required": false}', json_repr)
+    return re.sub(TagEncoder.OPTIONAL_ENTRY_RE, TagEncoder.SIMPLIFIED_OPTIONAL_ENTRY, json_repr)
 
 filename = "datapack/data/mu/tags/" + input("filename: datapack/data/mu/tags/")
 if not filename.endswith(".json"):
